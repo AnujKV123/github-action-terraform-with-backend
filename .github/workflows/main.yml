@@ -79,7 +79,7 @@ jobs:
 
           run: |
             cd s3module
-            terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}" -backend-config="region=${{ env.aws_region }} -backend-config="dynamodb_table=${{ env.dynamodb_table }}"
+            terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}" -backend-config="region=${{ env.aws_region }}" -backend-config="dynamodb_table=${{ env.dynamodb_table }}"
       
 
         - name: terraform plan
