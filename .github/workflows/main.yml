@@ -1,28 +1,96 @@
-name: terraform-workflow
-# on push 
+# name: terraform-workflow
+# # on push 
+# on:
+#   push:
+#     branches: [ "main" ]
+
+# jobs:
+#   createb1:
+#     runs-on: ubuntu-latest
+#     env:
+#       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+#       AWS_REGION: 'us-east-1'
+
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Install Terraform
+#         uses: little-core-labs/install-terraform@v2.0.0
+#         with:
+#             version: 0.13.4
+#       - name: Terraform apply
+#         run: |
+#           cd s3module
+#           terraform init -reconfigure
+#           terraform plan
+#           terraform apply -auto-approve
+# # added new comment
+
+name: deployment
+
 on:
   push:
     branches: [ "main" ]
 
-jobs:
-  createb1:
-    runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      AWS_REGION: 'us-east-1'
+env:
+  BUCKET: anuj-s3-backend
+  TFSTATE_FILE: anuj_S3_backend.tfstate
+  aws_region: us-east-1
+  dynamodb_table: anuj-backend-table1
 
-    steps:
-      - uses: actions/checkout@v1
-      - name: Install Terraform
-        uses: little-core-labs/install-terraform@v2.0.0
-        with:
-            version: 0.13.4
-      - name: Terraform apply
-        run: |
-          cd s3module
-          terraform init -reconfigure
-          terraform plan
-          terraform apply -auto-approve
-# added new comment
+jobs:
+
+  news3bucket :
+
+      runs-on : ubuntu-latest
+
+      steps:
+
+        - uses: actions/checkout@v3
+
+        - name: Terraform hashicorp setup
+
+          uses: hashicorp/setup-terraform@v2
+
+          # with:
+
+            # terraform_version: 1.1.7
+
+
+
+        - name: Configure AWS Credentials
+
+          uses: aws-actions/configure-aws-credentials@v1
+
+          with:
+
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+            aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+            aws-region: ${{ env.aws_region }}
+
+
+
+        - name: terraform init
+
+          run: |
+            cd s3module
+            terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}" -backend-config="region=${{ env.aws_region }} -backend-config="dynamodb_table=${{ env.dynamodb_table }}"
+      
+
+        - name: terraform plan
+
+          run: |
+            cd s3module
+            terraform plan
+        
+
+        - name: terraform apply
+
+          run: |
+            cd s3module 
+            terraform apply -auto-approve

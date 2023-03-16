@@ -25,9 +25,10 @@ name: destroy
 on:
   workflow_dispatch:
 env:
-  aws_region: ap-south-1
-  # BUCKET: anshugit1
-  # TFSTATE_FILE: S3.tfstate
+  BUCKET: anuj-s3-backend
+  TFSTATE_FILE: anuj_S3_backend.tfstate
+  aws_region: us-east-1
+  dynamodb_table: anuj-backend-table1
 
 jobs:
     destroy_bucket:
@@ -54,8 +55,7 @@ jobs:
         - name: terraform init
           run: |
             cd s3module
-              terraform init -reconfigure
-#            terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}" -backend-config="region=${{ env.aws_region }}"
+           terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}" -backend-config="region=${{ env.aws_region }} -backend-config="dynamodb_table=${{ env.dynamodb_table }}"
             
         - name: destroy
           run: |
