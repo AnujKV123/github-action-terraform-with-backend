@@ -3,10 +3,7 @@ name: terraform-workflow
 on:
   push:
     branches: [ "main" ]
-# env:
-#   BUCKET: anuj-s3-backend
-#   TFSTATE_FILE: anuj_terraform.tfstate
-  # aws_region: us-east-1
+
 jobs:
   create_bucket:
     runs-on: ubuntu-latest
