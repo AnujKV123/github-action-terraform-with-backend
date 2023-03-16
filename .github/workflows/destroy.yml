@@ -27,10 +27,10 @@ jobs:
 
       - name: terraform init
         run: |
-          cd module
+          cd s3module
           terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}"
           
       - name: destroy
         run: |
-          cd module
+          cd s3module
           terraform destroy -auto-approve

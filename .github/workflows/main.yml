@@ -27,13 +27,13 @@ jobs:
 
       - name: terraform init
         run: |
-          cd module
+          cd s3module
           terraform init -reconfigure -backend-config="bucket=anuj-s3-backend" -backend-config="key=anuj_terraform.tfstate"
       - name: terraform plan
         run: |
-          cd module
+          cd s3module
           terraform plan
       - name: terraform apply
         run: |
-          cd module 
+          cd s3module 
           terraform apply -auto-approve
