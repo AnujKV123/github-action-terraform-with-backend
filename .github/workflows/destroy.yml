@@ -17,7 +17,7 @@ jobs:
       aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
       AWS_REGION: 'us-east-1'
     steps:
-      - name: CheckOut
+      # - name: CheckOut
         uses: actions/checkout@v3
       - name: set up terraform hashicorp
         uses: hashicorp/setup-terraform@v1

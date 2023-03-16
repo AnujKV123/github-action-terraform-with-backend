@@ -1,43 +1,43 @@
-name: terraform-workflow
-# on push 
-on:
-  push:
-    branches: [ "main" ]
+# name: terraform-workflow
+# # on push 
+# on:
+#   push:
+#     branches: [ "main" ]
 
-jobs:
-  createb1:
-    runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-      AWS_REGION: 'us-east-1'
+# jobs:
+#   createb1:
+#     runs-on: ubuntu-latest
+#     env:
+#       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+#       AWS_REGION: 'us-east-1'
 
-    steps:
-        uses: actions/checkout@v3
-      - name: Terraform hashicorp setup
-        uses: hashicorp/setup-terraform@v1
+#     steps:
+#         uses: actions/checkout@v3
+#       - name: Terraform hashicorp setup
+#         uses: hashicorp/setup-terraform@v1
 
-      # - name: Configure AWS Credentials
-      # - uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-      #     aws-region: us-east-1
+#       # - name: Configure AWS Credentials
+#       # - uses: aws-actions/configure-aws-credentials@v1
+#       #   with:
+#       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+#       #     aws-region: us-east-1
 
-      - name: terraform init
-        id: init
-        run: |
-          cd s3module
-          terraform init
-      - name: terraform plan
-        id: plan
-        run: |
-          cd s3module
-          terraform plan
-      - name: terraform apply
-        id: apply
-        run: |
-          cd s3module 
-          terraform apply -auto-approve
+#       - name: terraform init
+#         id: init
+#         run: |
+#           cd s3module
+#           terraform init
+#       - name: terraform plan
+#         id: plan
+#         run: |
+#           cd s3module
+#           terraform plan
+#       - name: terraform apply
+#         id: apply
+#         run: |
+#           cd s3module 
+#           terraform apply -auto-approve
