@@ -10,16 +10,16 @@ env:
 
 jobs:
     destroy_bucket:
-      name: destroy
+      - name: destroy
       runs-on: ubuntu-latest
         steps:
           - name: CheckOut
-            uses: actions/checkout@v3
+          - uses: actions/checkout@v3
           - name: set up terraform hashicorp
-            uses: hashicorp/setup-terraform@v1
+          - uses: hashicorp/setup-terraform@v1
 
           - name: configure aws credentials
-            uses: aws-actions/configure-aws-credentials@v1
+          - uses: aws-actions/configure-aws-credentials@v1
             with:
               aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
               aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
