@@ -19,5 +19,6 @@ jobs:
             version: 0.13.4
       - name: Terraform apply
         run: |
+          cd s3module
           terraform init
           terraform destroy -auto-approve
