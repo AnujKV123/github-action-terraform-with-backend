@@ -26,14 +26,14 @@ jobs:
           aws-region: us-east-1
 
       - name: terraform init
-        run: |
+        - run: |
           cd s3module
           terraform init -reconfigure -backend-config="bucket=anuj-s3-backend" -backend-config="key=anuj_terraform.tfstate"
       - name: terraform plan
-        run: |
+        - run: |
           cd s3module
           terraform plan
       - name: terraform apply
-        run: |
+        - run: |
           cd s3module 
           terraform apply -auto-approve

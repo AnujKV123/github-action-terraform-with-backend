@@ -26,11 +26,11 @@ jobs:
           aws-region: ${{env.aws_region}}
 
       - name: terraform init
-        run: |
+        - run: |
           cd s3module
           terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}"
           
       - name: destroy
-        run: |
+        - run: |
           cd s3module
           terraform destroy -auto-approve
