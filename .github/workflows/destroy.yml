@@ -28,7 +28,7 @@ env:
   BUCKET: anuj-s3-backend
   TFSTATE_FILE: anuj_S3_backend.tfstate
   aws_region: us-east-1
-  dynamodb_table: anuj-backend-table1
+  dynamodb_table: anuj-backend-table
 
 jobs:
     destroy_bucket:
