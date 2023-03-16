@@ -4,10 +4,10 @@ on:
   push:
     branches: [ "main" ]
 
-env:
-  BUCKET: anuj-s3-backend
-  TFSTATE_FILE: anuj_terraform.tfstate
-  aws_region: us-east-1
+# env:
+#   BUCKET: anuj-s3-backend
+#   TFSTATE_FILE: anuj_terraform.tfstate
+  # aws_region: us-east-1
 
 jobs:
   job1:
@@ -23,12 +23,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ env.aws_region }}
+          aws-region: us-east-1
 
       - name: terraform init
         run: |
           cd module
-          terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}"
+          terraform init -reconfigure -backend-config="bucket=anuj-s3-backend" -backend-config="key=anuj_terraform.tfstate"
       - name: terraform plan
         run: |
           cd module

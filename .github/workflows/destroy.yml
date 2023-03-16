@@ -10,7 +10,6 @@ env:
 
 jobs:
   destroy_bucket:
-    - name: destroy
     runs-on: ubuntu-latest
     steps:
       - name: CheckOut
