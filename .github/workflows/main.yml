@@ -3,12 +3,10 @@ name: terraform-workflow
 on:
   push:
     branches: [ "main" ]
-
 # env:
 #   BUCKET: anuj-s3-backend
 #   TFSTATE_FILE: anuj_terraform.tfstate
   # aws_region: us-east-1
-
 jobs:
   create_bucket:
     runs-on: ubuntu-latest
@@ -32,14 +30,17 @@ jobs:
       #     aws-region: us-east-1
 
       - name: terraform init
+        id: init
         run: |
           cd s3module
           terraform init
       - name: terraform plan
+        id: plan
         run: |
           cd s3module
           terraform plan
       - name: terraform apply
+        id: apply
         run: |
           cd s3module 
           terraform apply -auto-approve

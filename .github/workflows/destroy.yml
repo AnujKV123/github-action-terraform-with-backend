@@ -31,11 +31,13 @@ jobs:
       #     aws-region: ${{env.aws_region}}
 
       - name: terraform init
+        id: init
         run: |
           cd s3module
           terraform init
           
       - name: destroy
+        id: destroy
         run: |
           cd s3module
           terraform destroy -auto-approve
