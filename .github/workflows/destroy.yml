@@ -1,21 +1,63 @@
-name: Terraform Destroy
+# name: Terraform Destroy
+
+# on:
+#   workflow_dispatch:
+
+# jobs:
+#   destroy_bucket:
+#     runs-on: ubuntu-latest
+#     env:
+#       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+#       AWS_REGION: 'us-east-1'
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Terraform Destroy
+#         uses: daniyalj/terraform-destroy-actions@v3
+#         run: |
+#           cd s3module
+#           terraform destroy -auto-approve
+# added new comment
+
+name: destroy
 
 on:
   workflow_dispatch:
+env:
+  aws_region: ap-south-1
+  # BUCKET: anshugit1
+  # TFSTATE_FILE: S3.tfstate
 
 jobs:
-  destroy_bucket:
-    runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      AWS_REGION: 'us-east-1'
-    steps:
-      - uses: actions/checkout@v1
-      - name: Terraform Destroy
-        uses: daniyalj/terraform-destroy-actions@v3
-        run: |
-          cd s3module
-          terraform destroy -auto-approve
-# added new comment
+    destroy_bucket:
+      name: destroy
+      runs-on: ubuntu-latest
+      steps:
+        - name: CheckOut
+          uses: actions/checkout@v3
+        - name: set up terraform hasicrop
+          uses: hashicorp/setup-terraform@v1
+
+          # with:
+          #   terraform_version: 1.1.7
+
+
+        - name: configure aws cridentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+            aws-region: ${{env.aws_region}}
+  
+        - name: terraform init
+          run: |
+            cd s3module
+              terraform init -reconfigure
+#            terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}" -backend-config="region=${{ env.aws_region }}"
+            
+        - name: destroy
+          run: |
+            cd s3module
+            terraform destroy -auto-approve
