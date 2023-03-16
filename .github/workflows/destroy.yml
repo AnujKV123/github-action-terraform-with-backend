@@ -1,26 +1,5 @@
-# name: Terraform Destroy
 
-# on:
-#   workflow_dispatch:
-
-# jobs:
-#   destroy_bucket:
-#     runs-on: ubuntu-latest
-#     env:
-#       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-#       AWS_REGION: 'us-east-1'
-#     steps:
-#       - uses: actions/checkout@v1
-#       - name: Terraform Destroy
-#         uses: daniyalj/terraform-destroy-actions@v3
-#         run: |
-#           cd s3module
-#           terraform destroy -auto-approve
-# added new comment
-
-name: destroy
+name: destroying resources
 
 on:
   workflow_dispatch:
@@ -57,7 +36,7 @@ jobs:
             cd s3module
             terraform init -reconfigure -backend-config="bucket=${{ env.BUCKET }}" -backend-config="key=${{ env.TFSTATE_FILE }}" -backend-config="region=${{ env.aws_region }}" -backend-config="dynamodb_table=${{ env.dynamodb_table }}"
             
-        - name: destroy
+        - name: terraform destroy
           run: |
             cd s3module
             terraform destroy -auto-approve
