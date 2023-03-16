@@ -17,25 +17,25 @@ jobs:
       aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
       aws-region: us-east-1
   steps:
-      - name: CheckOut
-      - uses: actions/checkout@v3
-      - name: set up terraform hashicorp
-      - uses: hashicorp/setup-terraform@v1
+    - name: CheckOut
+      uses: actions/checkout@v2
+    - name: set up terraform hashicorp
+      uses: hashicorp/setup-terraform@v1
 
-      # - name: configure aws credentials
-      # - uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-      #     aws-region: ${{env.aws_region}}
+    # - name: configure aws credentials
+    # - uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+    #     aws-region: ${{env.aws_region}}
 
-      - name: terraform init
-        run: |
-          cd s3module
-          terraform init
-          
-      - name: destroy
-        run: |
-          cd s3module
-          terraform destroy -auto-approve
+    - name: terraform init
+      run: |
+        cd s3module
+        terraform init
+        
+    - name: destroy
+      run: |
+        cd s3module
+        terraform destroy -auto-approve
