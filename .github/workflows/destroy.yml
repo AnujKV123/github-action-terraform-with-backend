@@ -15,4 +15,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Terraform Destroy
         uses: daniyalj/terraform-destroy-actions@v3
+        run: |
+          cd s3module
+          terraform destroy -auto-approve
 # added new comment
