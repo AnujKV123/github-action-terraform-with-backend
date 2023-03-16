@@ -1,5 +1,5 @@
 name: terraform-workflow
-
+# on push 
 on:
   push:
     branches: [ "main" ]
