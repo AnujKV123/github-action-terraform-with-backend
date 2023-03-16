@@ -13,13 +13,9 @@ jobs:
       AWS_REGION: 'us-east-1'
     steps:
       - uses: actions/checkout@v1
-      - name: Install Terraform
-        uses: little-core-labs/install-terraform@v2.0.0
+      - name: Terraform Destroy
+        uses: daniyalj/terraform-destroy-actions@v3
         with:
-            version: 0.13.4
-      - name: Terraform apply
-        run: |
-          cd s3module
-          terraform init
-          terraform destroy -auto-approve
+        org_name: 'AnujKV123'
+        repo_name: 'github-action-terraform-with-backend'
 # added new comment
