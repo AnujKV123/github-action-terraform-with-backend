@@ -1,0 +1,28 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Terraform init
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: "1.1.0"
+      run: |
+        terraform init
+
+    - name: Terraform destroy
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: "1.1.0"
+      env:
+        TF_VAR_environment: "dev" # replace with your environment variable name
+      run: |
+        terraform destroy -auto-approve
